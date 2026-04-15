@@ -24,26 +24,6 @@
 
   <div class="settings-col">
     <div class="settings-card">
-      <div class="settings-card-title">SOFTWARE / UPDATE</div>
-
-      <div class="pref-row pref-row--col">
-        <div class="pref-info">
-          <div class="pref-label">Version</div>
-          <div class="pref-desc" id="versionInfo">Klicke „Prüfen" um den aktuellen Stand abzufragen.</div>
-        </div>
-        <div class="update-btn-row">
-          <button class="settings-action-btn" id="checkUpdateBtn" onclick="checkUpdate()">↻ PRÜFEN</button>
-          <button class="settings-action-btn accent-btn" id="doUpdateBtn" onclick="doUpdate()" style="display:none">⬆ UPDATE INSTALLIEREN</button>
-          <a id="changelogLink" href="https://github.com/patrikaeberli/viewer/commits/main" target="_blank" class="settings-action-btn ghost-btn">CHANGELOG ↗</a>
-        </div>
-        <div id="updateLog" class="update-log" style="display:none"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="settings-col">
-    <div class="settings-card">
       <div class="settings-card-title">GERÄT / REFRESH</div>
 
       <div class="pref-row pref-row--col">
