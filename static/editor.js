@@ -412,17 +412,26 @@ function renderFreeCanvas(canvas, layer) {
     lbl.textContent = item.src.split('/').pop().substring(0, 24);
     el.appendChild(lbl);
 
-    el.onclick = e => { e.stopPropagation(); selectedItemIdx = i; renderCanvas(); renderProps(); };
+    el.onclick = e => { e.stopPropagation(); }; // stopPropagation only — selection happens in mousedown
 
     el.onmousedown = e => {
       if (e.target.classList.contains('ci-resize')) return;
       e.stopPropagation(); e.preventDefault();
+
+      // Select immediately on mousedown so props show up without waiting for click
+      if (selectedItemIdx !== i) {
+        selectedItemIdx = i;
+        renderCanvas(); renderProps();
+      }
+
       const sc = getScale();
       const rect = canvas.getBoundingClientRect();
       const ox = (e.clientX - rect.left) / sc - item.x;
       const oy = (e.clientY - rect.top)  / sc - item.y;
+      let moved = false;
 
       const onMove = e => {
+        moved = true;
         item.x = Math.max(0, Math.round((e.clientX - rect.left) / sc - ox));
         item.y = Math.max(0, Math.round((e.clientY - rect.top)  / sc - oy));
         el.style.left = item.x + 'px';
@@ -431,7 +440,7 @@ function renderFreeCanvas(canvas, layer) {
       const onUp = () => {
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onUp);
-        pushHistory(); scheduleSave(); renderProps();
+        if (moved) { pushHistory(); scheduleSave(); renderProps(); }
       };
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onUp);
@@ -548,13 +557,15 @@ function renderProps() {
     <div class="items-list" id="itemsList">`;
 
   layer.items.forEach((it, i) => {
-    const isSel = i === selectedItemIdx || (layer.type === 'carousel' && selectedItemIdx === i + 1);
+    // Carousel uses selectedItemIdx offset: 0=box, 1+=items. Free/BG use direct index.
+    const clickIdx = layer.type === 'carousel' ? i + 1 : i;
+    const isSel    = layer.type === 'carousel' ? selectedItemIdx === i + 1 : i === selectedItemIdx;
     let thumb;
     if (it.type === 'color') thumb = `<div class="item-thumb" style="background:${it.color||'#000'}"></div>`;
     else if (it.type === 'image') thumb = `<img class="item-thumb" src="${escAttr(it.src)}">`;
     else thumb = `<div class="item-thumb item-thumb-icon">${it.type === 'video' ? '▶' : '🌐'}</div>`;
 
-    html += `<div class="item-row${isSel?' item-row-sel':''}" onclick="selectItem(${i})">
+    html += `<div class="item-row${isSel?' item-row-sel':''}" onclick="selectItem(${clickIdx})">
       ${thumb}
       <div class="item-row-info">
         <div class="item-row-name">${it.type === 'color' ? 'Color: ' + (it.color||'#000') : escHtml(it.src.split('/').pop().substring(0,20))}</div>
@@ -571,9 +582,16 @@ function renderProps() {
   html += `</div></div>`;
 
   // ── Selected Item Props ──
-  const item = (selectedItemIdx !== null && layer.items[selectedItemIdx]) ? layer.items[selectedItemIdx] : null;
-  const carItem = (layer.type === 'carousel' && selectedItemIdx !== null && selectedItemIdx > 0) ? layer.items[selectedItemIdx - 1] : null;
-  const activeItem = item || carItem;
+  // For carousel: selectedItemIdx=0 means box, 1+ means items[selectedItemIdx-1]
+  // For free/bg:  selectedItemIdx is the direct item index
+  let activeItem = null;
+  if (selectedItemIdx !== null) {
+    if (layer.type === 'carousel' && selectedItemIdx > 0) {
+      activeItem = layer.items[selectedItemIdx - 1] || null;
+    } else if (layer.type !== 'carousel') {
+      activeItem = layer.items[selectedItemIdx] || null;
+    }
+  }
 
   if (activeItem) {
     html += `<div class="props-section"><div class="props-label">ITEM PROPERTIES</div>`;
