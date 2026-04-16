@@ -65,31 +65,6 @@
     </div>
   </div>
 
-  <!-- ── UPDATE ─────────────────────────────────── -->
-  <div class="settings-col">
-    <div class="settings-card">
-      <div class="settings-card-title">
-        UPDATE
-        <span id="updateBadge" class="update-badge checking">⬤ Wird geprüft…</span>
-      </div>
-      <div class="pref-row pref-row--col">
-        <div class="pref-info">
-          <div class="pref-label">Anwendung aktualisieren</div>
-          <div class="pref-desc">
-            Aktualisiert den Code aus GitHub via <code>update.sh</code>.
-            Assets (<code>assets/</code>), <code>state.json</code> und der Refresh-Befehl bleiben erhalten.
-          </div>
-          <div class="update-meta" id="updateMeta"></div>
-          <div class="update-commits" id="updateCommits"></div>
-        </div>
-        <div class="refresh-run-row">
-          <button class="refresh-cmd-btn run-btn" id="updateBtn" onclick="doUpdate()" disabled>↑ AKTUALISIEREN</button>
-          <span id="updateStatus" class="refresh-status"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ── ASSET LIBRARY ──────────────────────────── -->
   <div class="settings-col wide">
     <div class="settings-card">
@@ -103,7 +78,29 @@
     </div>
   </div>
 
+  <!-- ── Advanced ─────────────────────────────────── -->
+  <div class="settings-col">
+    <div class="settings-card">
+      <div class="settings-card-title">
+        Advanced Settings
+      </div>
+      <div class="pref-row pref-row--col">
+        <div class="pref-info">
+          <div class="pref-label">Erweiterte Einstellungen öffnen</div>
+          <div class="pref-desc"></div>
+        </div>
+        <div class="refresh-run-row">
+          <a href="advanced.php" class="topbar-btn">⚙ ADVANCED SETTINGS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 </div>
+
 
 
 <script src="static/settings.js"></script>
