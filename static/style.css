@@ -858,3 +858,36 @@ a { text-decoration: none; }
   font-size: 10px;
   border: 1px solid var(--border);
 }
+
+  .update-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    transition: background .3s, color .3s;
+  }
+  .update-badge.checking  { background: rgba(255,255,255,.08); color: #888; }
+  .update-badge.current   { background: rgba(80,220,100,.12);  color: #50dc64; }
+  .update-badge.outdated  { background: rgba(255,170,0,.14);   color: #ffaa00; }
+  .update-badge.error     { background: rgba(255,80,80,.12);   color: #ff5050; }
+  .update-commits {
+    margin-top: 10px;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: #888;
+    line-height: 1.7;
+  }
+  .update-commits a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .update-meta {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #555;
+    font-family: 'IBM Plex Mono', monospace;
+  }

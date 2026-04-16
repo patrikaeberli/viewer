@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Settings</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/style.css">
-  <link rel="icon" href="https://avatars.githubusercontent.com/u/175005826?v=4&size=64">
+<meta charset="UTF-8">
+<title>Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/175005826?v=4&size=64">
 </head>
 <body class="admin-body settings-body">
-
 <div id="topbar">
   <div class="topbar-left">
     <div class="logo"><span class="logo-icon">▣</span><span class="logo-text">SIGNAGE</span><span class="logo-sub">SETTINGS</span></div>
@@ -22,10 +21,10 @@
 
 <div id="settingsLayout">
 
+  <!-- ── GERÄT / REFRESH ─────────────────────────── -->
   <div class="settings-col">
     <div class="settings-card">
       <div class="settings-card-title">GERÄT / REFRESH</div>
-
       <div class="pref-row pref-row--col">
         <div class="pref-info">
           <div class="pref-label">Refresh-Befehl</div>
@@ -33,8 +32,8 @@
         </div>
         <div class="refresh-cmd-row">
           <input type="text" id="refreshCmdInput" class="refresh-cmd-input"
-                 placeholder="sudo systemctl restart signage-kiosk"
-                 spellcheck="false" autocomplete="off">
+            placeholder="sudo systemctl restart signage-kiosk"
+            spellcheck="false" autocomplete="off">
           <button class="refresh-cmd-btn save-btn" id="saveCmdBtn" onclick="saveRefreshCmd()">SPEICHERN</button>
         </div>
         <div class="refresh-run-row">
@@ -42,14 +41,13 @@
           <span id="refreshStatus" class="refresh-status"></span>
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- ── EDITOR PREFERENCES ─────────────────────── -->
   <div class="settings-col">
     <div class="settings-card">
       <div class="settings-card-title">EDITOR PREFERENCES</div>
-
       <div class="pref-row">
         <div class="pref-info">
           <div class="pref-label">Auto-save</div>
@@ -60,10 +58,35 @@
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
         </label>
       </div>
-
     </div>
   </div>
 
+  <!-- ── UPDATE ─────────────────────────────────── -->
+  <div class="settings-col">
+    <div class="settings-card">
+      <div class="settings-card-title">
+        UPDATE
+        <span id="updateBadge" class="update-badge checking">⬤ Wird geprüft…</span>
+      </div>
+      <div class="pref-row pref-row--col">
+        <div class="pref-info">
+          <div class="pref-label">Anwendung aktualisieren</div>
+          <div class="pref-desc">
+            Aktualisiert den Code aus GitHub via <code>update.sh</code>.
+            Assets (<code>assets/</code>), <code>state.json</code> und der Refresh-Befehl bleiben erhalten.
+          </div>
+          <div class="update-meta" id="updateMeta"></div>
+          <div class="update-commits" id="updateCommits"></div>
+        </div>
+        <div class="refresh-run-row">
+          <button class="refresh-cmd-btn run-btn" id="updateBtn" onclick="doUpdate()" disabled>↑ AKTUALISIEREN</button>
+          <span id="updateStatus" class="refresh-status"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSET LIBRARY ──────────────────────────── -->
   <div class="settings-col wide">
     <div class="settings-card">
       <div class="settings-card-title">
@@ -77,6 +100,7 @@
   </div>
 
 </div>
+
 
 <script src="static/settings.js"></script>
 </body>
