@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
+  /* Default theme */
   --bg:          #0c0c10;
   --panel:       #111116;
   --panel2:      #17171e;
@@ -19,6 +20,52 @@
   --accent-free: #4ade80;
   --accent-sel:  #e94560;
   --accent-btn:  #3b82f6;
+
+  --font-ui:   'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --topbar-h:  48px;
+  --sidebar-w: 220px;
+  --props-w:   264px;
+}
+
+.theme-dark {
+  --bg:          #0c0c10;
+  --panel:       #111116;
+  --panel2:      #17171e;
+  --border:      #1e1e28;
+  --border2:     #2a2a38;
+  --text:        #e0e0e8;
+  --muted:       #52525e;
+  --muted2:      #38383f;
+
+  --accent-bg:   #f59e0b;
+  --accent-car:  #22d3ee;
+  --accent-free: #4ade80;
+  --accent-sel:  #e94560;
+  --accent-btn:  #3b82f6;
+
+  --font-ui:   'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --topbar-h:  48px;
+  --sidebar-w: 220px;
+  --props-w:   264px;
+}
+
+.theme-white {
+  --bg:          #ffffff;
+  --panel:       #f5f5f7;
+  --panel2:      #e9e9ee;
+  --border:      #dcdce3;
+  --border2:     #cfcfd8;
+  --text:        #1a1a1f;
+  --muted:       #6b6b75;
+  --muted2:      #9a9aa3;
+
+  --accent-bg:   #f59e0b;
+  --accent-car:  #06b6d4;
+  --accent-free: #22c55e;
+  --accent-sel:  #e11d48;
+  --accent-btn:  #2563eb;
 
   --font-ui:   'DM Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
