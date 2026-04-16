@@ -15,6 +15,10 @@
   </div>
   <div class="topbar-center"></div>
   <div class="topbar-right">
+    <select  class="topbar-btn" id="themeSelect">
+      <option value="dark">Dark</option>
+      <option value="white">White</option>
+    </select>
     <a href="admin.php" class="topbar-btn highlight">← EDITOR</a>
   </div>
 </div>
@@ -103,5 +107,6 @@
 
 
 <script src="static/settings.js"></script>
+<script src="static/theme.js"></script>
 </body>
 </html>
