@@ -7,40 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="static/style.css">
 <link rel="icon" href="https://avatars.githubusercontent.com/u/175005826?v=4&size=64">
-<style>
-  .update-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    padding: 3px 10px;
-    border-radius: 20px;
-    vertical-align: middle;
-    margin-left: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    transition: background .3s, color .3s;
-  }
-  .update-badge.checking  { background: rgba(255,255,255,.08); color: #888; }
-  .update-badge.current   { background: rgba(80,220,100,.12);  color: #50dc64; }
-  .update-badge.outdated  { background: rgba(255,170,0,.14);   color: #ffaa00; }
-  .update-badge.error     { background: rgba(255,80,80,.12);   color: #ff5050; }
-  .update-commits {
-    margin-top: 10px;
-    font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: #888;
-    line-height: 1.7;
-  }
-  .update-commits a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-  .update-meta {
-    margin-top: 4px;
-    font-size: 11px;
-    color: #555;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-</style>
 </head>
 <body class="admin-body settings-body">
 <div id="topbar">
@@ -135,96 +101,6 @@
 
 </div>
 
-<script>
-// ── Update check & run ────────────────────────────────────────────────────────
-
-async function checkUpdate() {
-  const badge  = document.getElementById('updateBadge');
-  const meta   = document.getElementById('updateMeta');
-  const commits = document.getElementById('updateCommits');
-  const btn    = document.getElementById('updateBtn');
-  const status = document.getElementById('updateStatus');
-
-  badge.className = 'update-badge checking';
-  badge.textContent = '⬤ Wird geprüft…';
-  meta.textContent  = '';
-  commits.innerHTML = '';
-
-  try {
-    const r = await fetch('api.php?action=check_update');
-    const d = await r.json();
-
-    if (d.error) throw new Error(d.error);
-
-    meta.textContent = `Aktueller Stand: ${d.current_hash}  (${d.branch})` +
-      (d.current_date ? `  ·  ${d.current_date.slice(0,10)}` : '');
-
-    if (d.up_to_date) {
-      badge.className   = 'update-badge current';
-      badge.textContent = '✔ Aktuell';
-      btn.disabled = true;
-      status.textContent = '';
-    } else {
-      badge.className   = 'update-badge outdated';
-      badge.textContent = `⬤ Nicht aktuell  (+${d.behind})`;
-      btn.disabled = false;
-
-      if (d.commits && d.commits.length) {
-        commits.innerHTML = d.commits
-          .map(c => `<span>▸ ${escHtml(c)}</span>`)
-          .join('<br>');
-        if (d.changelog_url) {
-          commits.innerHTML += `<br><a href="${d.changelog_url}" target="_blank" rel="noopener">→ Alle Änderungen auf GitHub</a>`;
-        }
-      }
-    }
-  } catch (e) {
-    badge.className   = 'update-badge error';
-    badge.textContent = '✘ Fehler';
-    meta.textContent  = e.message || 'Unbekannter Fehler';
-    btn.disabled = false; // allow manual retry via update
-  }
-}
-
-async function doUpdate() {
-  const btn    = document.getElementById('updateBtn');
-  const status = document.getElementById('updateStatus');
-  const badge  = document.getElementById('updateBadge');
-
-  btn.disabled = true;
-  badge.className = 'update-badge checking';
-  badge.textContent = '⬤ Wird aktualisiert…';
-  status.textContent = '⏳ Update läuft…';
-
-  try {
-    const r = await fetch('api.php?action=do_update');
-    const d = await r.json();
-
-    if (d.ok) {
-      status.textContent = `✔ Fertig  (${d.new_hash || 'OK'})`;
-      await checkUpdate(); // refresh badge
-    } else {
-      status.textContent = `✘ Fehler (Code ${d.code})`;
-      if (d.output) status.title = d.output;
-      badge.className = 'update-badge error';
-      badge.textContent = '✘ Fehler';
-      btn.disabled = false;
-    }
-  } catch (e) {
-    status.textContent = '✘ Netzwerkfehler';
-    badge.className = 'update-badge error';
-    badge.textContent = '✘ Fehler';
-    btn.disabled = false;
-  }
-}
-
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// Run check on page load
-checkUpdate();
-</script>
 
 <script src="static/settings.js"></script>
 </body>
