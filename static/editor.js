@@ -93,6 +93,7 @@ function undo() {
   selectedItemIdx = null;
   renderAll();
   scheduleSave();
+  updateUndoRedoBtns();
 }
 
 function redo() {
@@ -102,6 +103,7 @@ function redo() {
   selectedItemIdx = null;
   renderAll();
   scheduleSave();
+  updateUndoRedoBtns();
 }
 
 function updateUndoRedoBtns() {
